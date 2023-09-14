@@ -122,3 +122,11 @@ body {
 .big-button:hover, .red-button:hover, .button:hover {
     transform: scale(1.12);
 }
+
+.footer {
+    display: flex;
+    padding-top: 30px;
+    font-size: 14px;
+    justify-content: center;
+
+}
