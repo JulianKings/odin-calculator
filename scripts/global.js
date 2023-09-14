@@ -98,19 +98,29 @@ function buttonOnClick(event, button)
             operationString = operationString.concat("^");
             break;
         case "squareButton":
-            if(operationString !== "" && isNaN(operationString))
+            if(isNaN(operationString.charAt(0)))
             {
-                executeOperation();
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            } else if((lastOperationFinished))
+            {
+                operationString = lastResult + operationString;
             }
             operationString = operationString.concat("²");
-            break;
-        case "squareButton":
-            if(operationString !== "" && isNaN(operationString))
+            displayOperationBox.textContent = operationString;
+            executeSquare();
+            return;
+        case "sqrtButton":
+            if(isNaN(operationString.charAt(0)))
             {
-                executeOperation();
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            } else if((lastOperationFinished))
+            {
+                operationString = lastResult + operationString;
             }
-            operationString = operationString.concat("√");
-            break;
+            operationString = "√" + operationString;
+            displayOperationBox.textContent = operationString;
+            executeSquareRoot();
+            return;
         case "divideButton":
             if(operationString !== "" && isNaN(operationString))
             {
@@ -262,6 +272,56 @@ function buttonOnMouseOver(event, button)
 }
 
 // Operations Logic
+function executeSquare()
+{
+    if(operationString === undefined || operationString === "" || operationString === "²")
+    {
+        if(lastResult > 0)
+        {
+            let result = Math.pow(lastResult, 2);
+            displayResultBox.textContent = result;
+            lastResult = result;
+            lastOperationFinished = true;
+            operationString = "";
+        } else {
+            displayResultBox.textContent = "0";
+            lastResult = 0;
+            lastOperationFinished = true;
+        }
+    } else {
+        let result = Math.pow(cleanUpNumber(operationString.slice(0, operationString.length - 1)), 2);
+        displayResultBox.textContent = result;
+        lastResult = result;
+        lastOperationFinished = true;
+        operationString = "";
+    }
+}
+
+function executeSquareRoot()
+{
+    if(operationString === undefined || operationString === "" || operationString === "√")
+    {
+        if(lastResult > 0)
+        {
+            let result = Math.pow(lastResult, 1/2);
+            displayResultBox.textContent = result;
+            lastResult = result;
+            lastOperationFinished = true;
+            operationString = "";
+        } else {
+            displayResultBox.textContent = "0";
+            lastResult = 0;
+            lastOperationFinished = true;
+        }
+    } else {
+        let result = Math.pow(cleanUpNumber(operationString.slice(1, operationString.length)), 1/2);
+        displayResultBox.textContent = result;
+        lastResult = result;
+        lastOperationFinished = true;
+        operationString = "";
+    }
+}
+
 function executeOperation()
 {
     if(operationString === undefined || operationString === "")
@@ -334,7 +394,50 @@ function executeOperation()
                     operationString = "";
                 } else {
                     let split = operationString.split("/");
-                    let result = cleanUpNumber(split[0]) / cleanUpNumber(split[1]);
+                    console.log(split[1]);
+                    if(+split[1] === 0)
+                    {
+                        displayResultBox.textContent = "Come on...";
+                        lastResult = Infinity;
+                        lastOperationFinished = true;
+                        operationString = "";
+                    } else {
+                        let result = cleanUpNumber(split[0]) / cleanUpNumber(split[1]);
+                        displayResultBox.textContent = result;
+                        lastResult = result;
+                        lastOperationFinished = true;
+                        operationString = "";
+                    }
+                }
+            } else if(operationString.includes("^"))
+            {
+                if(operationString.endsWith("^"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("^");
+                    let result = Math.pow(cleanUpNumber(split[0]), cleanUpNumber(split[1]));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                }
+            } else if(operationString.includes("%"))
+            {
+                if(operationString.endsWith("%"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("%");
+                    let result = cleanUpNumber(split[0]) % cleanUpNumber(split[1]);
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
