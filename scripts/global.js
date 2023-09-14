@@ -2,6 +2,12 @@ const buttons = document.querySelectorAll(".button");
 const clearButton = document.querySelector("#clearButton");
 const backButton = document.querySelector("#backButton");
 const equalButton = document.querySelector("#equalButton");
+const displayOperationBox = document.querySelector(".displayOperation");
+const displayResultBox = document.querySelector(".displayResult");
+
+let operationString = "";
+let lastResult = 0;
+let lastOperationFinished = false;
 
 buttons.forEach((button) => {
     // register all Handlers
@@ -37,12 +43,135 @@ function registerHandlers(button)
     });
 }
 
+// MAIN CLICK HANDLER
 
 function buttonOnClick(event, button)
 {
-    console.log("CLICK => " + button.id);
+    let oldOperationString = operationString;
+    switch(button.id)
+    {
+        case "oneButton":
+            operationString = operationString.concat("1");
+            break;
+        case "twoButton":
+            operationString = operationString.concat("2");
+            break;
+        case "threeButton":
+            operationString = operationString.concat("3");
+        break;
+        case "fourButton":
+            operationString = operationString.concat("4");
+            break;
+        case "fiveButton":
+            operationString = operationString.concat("5");
+            break;
+        case "sixButton":
+            operationString = operationString.concat("6");
+        break;
+        case "sevenButton":
+            operationString = operationString.concat("7");
+            break;
+        case "eightButton":
+            operationString = operationString.concat("8");
+            break;
+        case "nineButton":
+            operationString = operationString.concat("9");
+        break;
+        case "zeroButton":
+            operationString = operationString.concat("0");
+        break;
+        case "decimalButton":
+            operationString = operationString.concat(".");
+        break;
+        case "moduleButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("%");
+            break;
+        case "powerButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("^");
+            break;
+        case "squareButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("²");
+            break;
+        case "squareButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("√");
+            break;
+        case "divideButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("/");
+            break;
+        case "multiplyButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("x");
+            break;
+        case "plusButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("+");
+            break;
+        case "minusButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                executeOperation();
+            }
+            operationString = operationString.concat("-");
+            break;
+        case "backButton":
+            if(operationString.length > 0)
+            {
+                operationString = operationString.slice(0, operationString.length - 1);
+            } else if(operationString.length === 1)
+            {
+                operationString = "";
+            }
+            break;
+        case "clearButton":
+            operationString = "";
+            oldOperationString = "";
+            displayOperationBox.textContent = "";
+            displayResultBox.textContent = "";
+            lastResult = 0;
+            lastOperationFinished = true;
+            break;
+        case "equalButton":
+            executeOperation();
+            break;
+    }
+
+    if(oldOperationString !== operationString)
+    {
+        if(isNaN(operationString.charAt(0)))
+        {
+            operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+        }
+        displayOperationBox.textContent = operationString;
+    }
 }
 
+// SECONDARY STYLE HANDLERS
 function buttonOnMouseDown(event, button)
 {
     if(button.classList.contains("button"))
@@ -130,4 +259,113 @@ function buttonOnMouseOver(event, button)
     {
         button.style["background-color"] = "#7c1919";
     }
+}
+
+// Operations Logic
+function executeOperation()
+{
+    if(operationString === undefined || operationString === "")
+    {
+        displayResultBox.textContent = "0";
+        lastResult = 0;
+        lastOperationFinished = true;
+    } else {
+        if(isNaN(operationString))
+        {
+            if(operationString.includes("+"))
+            {
+                if(operationString.endsWith("+"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("+");
+                    let result = cleanUpNumber(split[0]) + cleanUpNumber(split[1]);
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                }
+            } else if(operationString.includes("-"))
+            {
+                if(operationString.endsWith("-"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("-");
+                    let result = cleanUpNumber(split[0]) - cleanUpNumber(split[1]);
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                }
+            } else if(operationString.includes("x"))
+            {
+                if(operationString.endsWith("x"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("x");
+                    let result = cleanUpNumber(split[0]) * cleanUpNumber(split[1]);
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                }
+            } else if(operationString.includes("/"))
+            {
+                if(operationString.endsWith("/"))
+                {
+                    let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                } else {
+                    let split = operationString.split("/");
+                    let result = cleanUpNumber(split[0]) / cleanUpNumber(split[1]);
+                    displayResultBox.textContent = result;
+                    lastResult = result;
+                    lastOperationFinished = true;
+                    operationString = "";
+                }
+            } else {
+                displayResultBox.textContent = "Math error"; 
+            }
+        } else {
+            if(operationString.includes("."))
+            {
+                lastResult = Number.parseFloat(operationString).toFixed(2);
+                displayResultBox.textContent = lastResult;
+                lastOperationFinished = true;
+            } else {
+                displayResultBox.textContent = operationString;
+                lastResult = Number.parseInt(operationString);
+                lastOperationFinished = true;
+            }
+            operationString = "";
+        }
+    }
+}
+
+function cleanUpNumber(numberString)
+{
+    if(numberString.includes("."))
+    {
+        return +Number.parseFloat(numberString).toFixed(2);
+    } else {
+        return +Number.parseInt(numberString);
+    }
+
 }
