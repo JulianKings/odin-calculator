@@ -54,6 +54,7 @@ function buttonOnClick(event, button)
 {
     let oldOperationString = operationString;
     let firstNegative = false;
+    let concatMinus = false;
     if(operationString.startsWith("-"))
     {
         firstNegative = true;
@@ -142,11 +143,20 @@ function buttonOnClick(event, button)
             }
         break;
         case "decimalButton":
-            operationString = operationString.concat(".");
-            if(firstNegative)
+            if(!operationString.includes("."))
             {
-                operationString = "-" + operationString;
-                firstNegative = false;
+                operationString = operationString.concat(".");
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+            } else {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
             }
         break;
         case "moduleButton":
@@ -182,7 +192,7 @@ function buttonOnClick(event, button)
                     firstNegative = false;
                 }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
-            } else if((lastOperationFinished))
+            } else if(operationString === "" && (lastOperationFinished) && lastResult !== 0 && lastResult != NaN)
             {
                 if(firstNegative)
                 {
@@ -204,7 +214,7 @@ function buttonOnClick(event, button)
                     firstNegative = false;
                 }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
-            } else if((lastOperationFinished))
+            } else if(operationString === "" && (lastOperationFinished) && lastResult !== 0 && lastResult != NaN)
             {
                 if(firstNegative)
                 {
@@ -262,6 +272,7 @@ function buttonOnClick(event, button)
                 }
                 executeOperation();
             }
+            concatMinus = true;
             operationString = operationString.concat("-");
             break;
         case "backButton":
@@ -289,10 +300,19 @@ function buttonOnClick(event, button)
                 executeOperation();
             }
 
-            if(lastResult !== 0)
+            if(lastResult !== 0 && operationString === "")
             {
                 lastResult = -lastResult;
                 displayResultBox.textContent = lastResult;
+            } else if (operationString !== "")
+            {   
+                if(firstNegative)
+                {
+                    firstNegative = false;
+                } else { 
+                    operationString = "-" + operationString;
+                    displayOperationBox.operationString = operationString;
+                }
             }
             break;
         case "clearButton":
@@ -325,6 +345,15 @@ function buttonOnClick(event, button)
                     firstNegative = false;
                 }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            } else if(concatMinus) {
+                concatMinus = false;
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            
             }
         }
         displayOperationBox.textContent = operationString;
@@ -436,11 +465,20 @@ function keyboardPress(event)
             }
         break;
         case "Period":
-            operationString = operationString.concat(".");
-            if(firstNegative)
+            if(!operationString.includes("."))
             {
-                operationString = "-" + operationString;
-                firstNegative = false;
+                operationString = operationString.concat(".");
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+            } else {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
             }
         break;
         case "NumpadDivide":
