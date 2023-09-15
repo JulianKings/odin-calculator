@@ -48,44 +48,110 @@ function registerHandlers(button)
 function buttonOnClick(event, button)
 {
     let oldOperationString = operationString;
+    let firstNegative = false;
+    if(operationString.startsWith("-"))
+    {
+        firstNegative = true;
+        operationString = operationString.slice(1, operationString.length);
+    }
     switch(button.id)
     {
         case "oneButton":
             operationString = operationString.concat("1");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "twoButton":
             operationString = operationString.concat("2");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "threeButton":
             operationString = operationString.concat("3");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
         break;
         case "fourButton":
             operationString = operationString.concat("4");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "fiveButton":
             operationString = operationString.concat("5");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "sixButton":
             operationString = operationString.concat("6");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
         break;
         case "sevenButton":
             operationString = operationString.concat("7");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "eightButton":
             operationString = operationString.concat("8");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             break;
         case "nineButton":
             operationString = operationString.concat("9");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
         break;
         case "zeroButton":
             operationString = operationString.concat("0");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
         break;
         case "decimalButton":
             operationString = operationString.concat(".");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
         break;
         case "moduleButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("%");
@@ -93,6 +159,11 @@ function buttonOnClick(event, button)
         case "powerButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("^");
@@ -100,9 +171,19 @@ function buttonOnClick(event, button)
         case "squareButton":
             if(isNaN(operationString.charAt(0)))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
             } else if((lastOperationFinished))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 operationString = lastResult + operationString;
             }
             operationString = operationString.concat("²");
@@ -112,9 +193,18 @@ function buttonOnClick(event, button)
         case "sqrtButton":
             if(isNaN(operationString.charAt(0)))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
             } else if((lastOperationFinished))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                }
                 operationString = lastResult + operationString;
             }
             operationString = "√" + operationString;
@@ -124,6 +214,11 @@ function buttonOnClick(event, button)
         case "divideButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("/");
@@ -131,6 +226,11 @@ function buttonOnClick(event, button)
         case "multiplyButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("x");
@@ -138,6 +238,11 @@ function buttonOnClick(event, button)
         case "plusButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("+");
@@ -145,6 +250,11 @@ function buttonOnClick(event, button)
         case "minusButton":
             if(operationString !== "" && isNaN(operationString))
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 executeOperation();
             }
             operationString = operationString.concat("-");
@@ -152,10 +262,32 @@ function buttonOnClick(event, button)
         case "backButton":
             if(operationString.length > 0)
             {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
                 operationString = operationString.slice(0, operationString.length - 1);
             } else if(operationString.length === 1)
             {
                 operationString = "";
+            }
+            break;
+        case "plusMinusButton":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                executeOperation();
+            }
+
+            if(lastResult !== 0)
+            {
+                lastResult = -lastResult;
+                displayResultBox.textContent = lastResult;
             }
             break;
         case "clearButton":
@@ -167,6 +299,11 @@ function buttonOnClick(event, button)
             lastOperationFinished = true;
             break;
         case "equalButton":
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
             executeOperation();
             break;
     }
@@ -175,7 +312,15 @@ function buttonOnClick(event, button)
     {
         if(isNaN(operationString.charAt(0)))
         {
-            operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            if(!operationString.startsWith("-"))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            }
         }
         displayOperationBox.textContent = operationString;
     }
@@ -289,7 +434,13 @@ function executeSquare()
             lastOperationFinished = true;
         }
     } else {
-        let result = Math.pow(cleanUpNumber(operationString.slice(0, operationString.length - 1)), 2);
+        let firstNegative = false;
+        if(operationString.startsWith("-"))
+        {
+            firstNegative = true;
+            operationString = operationString.slice(1, operationString.length);
+        }
+        let result = Math.pow((firstNegative) ? -cleanUpNumber(operationString.slice(0, operationString.length - 1)) : cleanUpNumber(operationString.slice(0, operationString.length - 1)), 2);
         displayResultBox.textContent = result;
         lastResult = result;
         lastOperationFinished = true;
@@ -314,7 +465,16 @@ function executeSquareRoot()
             lastOperationFinished = true;
         }
     } else {
-        let result = Math.pow(cleanUpNumber(operationString.slice(1, operationString.length)), 1/2);
+        // clean sqrt symbol
+        operationString = (operationString.slice(1, operationString.length));
+        // do math
+        let firstNegative = false;
+        if(operationString.startsWith("-"))
+        {
+            firstNegative = true;
+            operationString = operationString.slice(1, operationString.length);
+        }
+        let result = Math.pow((firstNegative) ? -cleanUpNumber(operationString) : cleanUpNumber(operationString), 1/2);
         displayResultBox.textContent = result;
         lastResult = result;
         lastOperationFinished = true;
@@ -326,24 +486,43 @@ function executeOperation()
 {
     if(operationString === undefined || operationString === "")
     {
-        displayResultBox.textContent = "0";
-        lastResult = 0;
-        lastOperationFinished = true;
+        if(lastResult !== 0)
+        {
+            displayResultBox.textContent = lastResult;
+            lastOperationFinished = true;
+        } else {
+            displayResultBox.textContent = "0";
+            lastResult = 0;
+            lastOperationFinished = true;
+        }
     } else {
         if(isNaN(operationString))
         {
+            let firstNegative = false;
+            if(operationString.startsWith("-"))
+            {
+                firstNegative = true;
+                operationString = operationString.slice(1, operationString.length);
+                console.log(operationString);
+            }
+
             if(operationString.includes("+"))
             {
                 if(operationString.endsWith("+"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
                     operationString = "";
                 } else {
                     let split = operationString.split("+");
-                    let result = cleanUpNumber(split[0]) + cleanUpNumber(split[1]);
+                    let result = ((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])) + cleanUpNumber(split[1]);
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
@@ -354,13 +533,18 @@ function executeOperation()
                 if(operationString.endsWith("-"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
                     operationString = "";
                 } else {
                     let split = operationString.split("-");
-                    let result = cleanUpNumber(split[0]) - cleanUpNumber(split[1]);
+                    let result = ((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])) - cleanUpNumber(split[1]);
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
@@ -371,13 +555,18 @@ function executeOperation()
                 if(operationString.endsWith("x"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
                     operationString = "";
                 } else {
                     let split = operationString.split("x");
-                    let result = cleanUpNumber(split[0]) * cleanUpNumber(split[1]);
+                    let result = ((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])) * cleanUpNumber(split[1]);
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
@@ -388,6 +577,11 @@ function executeOperation()
                 if(operationString.endsWith("/"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
@@ -402,7 +596,7 @@ function executeOperation()
                         lastOperationFinished = true;
                         operationString = "";
                     } else {
-                        let result = cleanUpNumber(split[0]) / cleanUpNumber(split[1]);
+                        let result = ((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])) / cleanUpNumber(split[1]);
                         displayResultBox.textContent = result;
                         lastResult = result;
                         lastOperationFinished = true;
@@ -414,13 +608,18 @@ function executeOperation()
                 if(operationString.endsWith("^"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
                     operationString = "";
                 } else {
                     let split = operationString.split("^");
-                    let result = Math.pow(cleanUpNumber(split[0]), cleanUpNumber(split[1]));
+                    let result = Math.pow(((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])), cleanUpNumber(split[1]));
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
@@ -431,13 +630,18 @@ function executeOperation()
                 if(operationString.endsWith("%"))
                 {
                     let result = cleanUpNumber(operationString.slice(0, operationString.length - 1));
+                    if(firstNegative)
+                    {
+                        result = -result;
+                        firstNegative = false;
+                    }
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
                     operationString = "";
                 } else {
                     let split = operationString.split("%");
-                    let result = cleanUpNumber(split[0]) % cleanUpNumber(split[1]);
+                    let result = ((firstNegative) ? -cleanUpNumber(split[0]) : cleanUpNumber(split[0])) % cleanUpNumber(split[1]);
                     displayResultBox.textContent = result;
                     lastResult = result;
                     lastOperationFinished = true;
