@@ -343,8 +343,6 @@ function keyboardPress(event)
         operationString = operationString.slice(1, operationString.length);
     }
 
-    console.log(event.code);
-
     switch(event.code)
     {
         case "Digit1":

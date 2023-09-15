@@ -20,7 +20,11 @@ body {
 }
 
 .display {
-    width: 87%;
+    width: 285px;
+    display: flex;
+    flex-direction: column;
+    min-height: 50px;
+    max-width: 320px;
     border-radius: 12px;
     background-color: #424242;
     text-align: right;
@@ -46,14 +50,24 @@ body {
 {
     color: #bbbcbe;
     margin-bottom: 5px;
-    height: 20px;
+    min-height: 20px;    
+    width: 280px;
+    max-width: 280px;
+    display: flex;
+    justify-content: flex-end;
+    word-break: break-all;
 }
 
 .displayResult {
-    height: 28px;
+    min-height: 28px;        
+    width: 280px;
+    max-width: 280px;
+    display: flex;
     color: #ffffff;
     font-weight: bold;
     font-size: 24px;
+    justify-content: flex-end;
+    word-break: break-all;
 }
 
 .button-row {
