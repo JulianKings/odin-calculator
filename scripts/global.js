@@ -366,6 +366,7 @@ function keyboardPress(event)
 {
     let oldOperationString = operationString;
     let firstNegative = false;
+    let concatMinus = false;
     if(operationString.startsWith("-"))
     {
         firstNegative = true;
@@ -529,6 +530,7 @@ function keyboardPress(event)
                 }
                 executeOperation();
             }
+            concatMinus = true;
             operationString = operationString.concat("-");
             break;
         case "Backspace":
@@ -575,6 +577,15 @@ function keyboardPress(event)
                     firstNegative = false;
                 }
                 operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            } else if(concatMinus) {
+                concatMinus = false;
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            
             }
         }
         displayOperationBox.textContent = operationString;
