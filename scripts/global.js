@@ -14,6 +14,11 @@ buttons.forEach((button) => {
     registerHandlers(button);
 });
 
+// register keypress handler
+window.addEventListener("keydown", (event) => {
+    keyboardPress(event);
+})
+
 registerHandlers(clearButton);
 registerHandlers(backButton);
 registerHandlers(equalButton);
@@ -299,6 +304,220 @@ function buttonOnClick(event, button)
             lastOperationFinished = true;
             break;
         case "equalButton":
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            executeOperation();
+            break;
+    }
+
+    if(oldOperationString !== operationString)
+    {
+        if(isNaN(operationString.charAt(0)))
+        {
+            if(!operationString.startsWith("-"))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                operationString = ((lastOperationFinished) ? lastResult : 0) + operationString;
+            }
+        }
+        displayOperationBox.textContent = operationString;
+    }
+}
+
+// KEYBOARD HANDLER
+
+function keyboardPress(event)
+{
+    let oldOperationString = operationString;
+    let firstNegative = false;
+    if(operationString.startsWith("-"))
+    {
+        firstNegative = true;
+        operationString = operationString.slice(1, operationString.length);
+    }
+
+    console.log(event.code);
+
+    switch(event.code)
+    {
+        case "Digit1":
+        case "Numpad1":
+            operationString = operationString.concat("1");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit2":
+        case "Numpad2":
+            operationString = operationString.concat("2");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit3":
+        case "Numpad3":
+            operationString = operationString.concat("3");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+        break;
+        case "Digit4":
+        case "Numpad4":
+            operationString = operationString.concat("4");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit5":
+        case "Numpad5":
+            operationString = operationString.concat("5");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit6":
+        case "Numpad6":
+            operationString = operationString.concat("6");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+        break;        
+        case "Digit7":
+        case "Numpad7":
+            operationString = operationString.concat("7");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit8":
+        case "Numpad8":
+            operationString = operationString.concat("8");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;        
+        case "Digit9":
+        case "Numpad9":
+            operationString = operationString.concat("9");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+            break;
+        case "Digit0":
+        case "Numpad0":
+            operationString = operationString.concat("0");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+        break;
+        case "Period":
+            operationString = operationString.concat(".");
+            if(firstNegative)
+            {
+                operationString = "-" + operationString;
+                firstNegative = false;
+            }
+        break;
+        case "NumpadDivide":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                executeOperation();
+            }
+            operationString = operationString.concat("/");
+            break;
+        case "NumpadMultiply":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                executeOperation();
+            }
+            operationString = operationString.concat("x");
+            break;
+        case "BracketRight":
+        case "NumpadAdd":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                executeOperation();
+            }
+            operationString = operationString.concat("+");
+            break;
+        case "Slash":
+        case "NumpadSubtract":
+            if(operationString !== "" && isNaN(operationString))
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                executeOperation();
+            }
+            operationString = operationString.concat("-");
+            break;
+        case "Backspace":
+            if(operationString.length > 0)
+            {
+                if(firstNegative)
+                {
+                    operationString = "-" + operationString;
+                    firstNegative = false;
+                }
+                operationString = operationString.slice(0, operationString.length - 1);
+            } else if(operationString.length === 1)
+            {
+                operationString = "";
+            }
+            break;
+        case "Delete":
+            operationString = "";
+            oldOperationString = "";
+            displayOperationBox.textContent = "";
+            displayResultBox.textContent = "";
+            lastResult = 0;
+            lastOperationFinished = true;
+            break;
+        case "Enter":
             if(firstNegative)
             {
                 operationString = "-" + operationString;
