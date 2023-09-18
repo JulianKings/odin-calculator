@@ -96,6 +96,11 @@ body {
     color: #181818;
 }
 
+.button:active {
+    background-color: #818181;
+    color: #181818;
+}
+
 .red-button {
     display: flex;
     width: 50px;
@@ -114,6 +119,10 @@ body {
     background-color: #7c1919;
 }
 
+.red-button:active {
+    background-color: #4e0404;
+}
+
 .big-button {
     display: flex;
     width: 180px;
@@ -130,6 +139,11 @@ body {
 
 .big-button:hover {
     background-color: #30a854;
+    color: #181818;
+}
+
+.big-button:active {
+    background-color: #118634;
     color: #181818;
 }
 
